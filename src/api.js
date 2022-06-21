@@ -1,12 +1,13 @@
-const Hapi = require('hapi')
+const Hapi = require('@hapi/hapi')
+const Joi = require('joi');
 const Context = require('./db/strategies/base/contextStrategy')
 const MongoDB = require('./db/strategies/mongodb/mongodb')
 const HeroSchema = require('./db/strategies/mongodb/schemas/heroisSchema')
 const HeroRoute = require('./routes/heroRoutes')
 
 const HapiSwagger = require('hapi-swagger')
-const Vision = require('vision')
-const Inert = require('inert')
+const Vision = require('@hapi/vision')
+const Inert = require('@hapi/inert')
 
 const app = new Hapi.Server({
     port: 4000
@@ -16,7 +17,7 @@ function mapRoutes (instance, methods) {
 }
 
 async function main() {
-    
+
     const connection = MongoDB.connect()
     const context = new Context(new MongoDB(connection, HeroSchema))
 
@@ -25,7 +26,6 @@ async function main() {
             title: 'Api herois - Ilso Christ',
             version: 'v1.0'
         },
-        lang: 'pt'
     }
 
     await app.register([
@@ -36,6 +36,8 @@ async function main() {
             options: swaggerOptions
         }
     ])
+
+    app.validator(Joi);
 
     app.route(
         mapRoutes(new HeroRoute(context), HeroRoute.methods())
