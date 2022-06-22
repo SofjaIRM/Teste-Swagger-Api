@@ -33,7 +33,7 @@ describe('API Heroes test suite', function ()  {
         const statusCode = result.statusCode;
         const dados = JSON.parse(result.payload);
 
-        assert.ok(statusCode, 200);
+        assert.deepEqual(statusCode, 200);
         assert.ok(Array.isArray(dados));
     })
 
@@ -111,7 +111,7 @@ describe('API Heroes test suite', function ()  {
         const statusCode = result.statusCode
         const dados = JSON.parse(result.payload)
 
-        assert.ok(statusCode, 200)
+        assert.ok(statusCode === 200)
         assert.deepEqual(dados.message, 'Heroi atualizado com sucesso!')
     })
 
@@ -141,7 +141,7 @@ describe('API Heroes test suite', function ()  {
             method: 'DELETE',
             url: `/herois/${MOCK_ID}` 
         })
-        assert.ok(result.statusCode, 200) 
+        assert.ok(result.statusCode === 200) 
         assert.ok(JSON.parse(result.payload))
     })
 
@@ -176,7 +176,7 @@ describe('API Heroes test suite', function ()  {
             error: 'Internal Server Error',
             message: 'An internal server error occurred'
     }
-        assert.ok(statusCode, 500) 
-        assert.ok(dados, expected)
+        assert.ok(statusCode === 500) 
+        assert.deepEqual(dados, expected)
     })
 })
