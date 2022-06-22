@@ -47,7 +47,7 @@ class MongoDB extends ICrud {
         return this._schema.updateOne({_id: id}, { $set: item})
     }
     delete(id) {
-        return this._schema.deleteOne({id: id})
+        return this._schema.deleteOne({_id: id})
     }
 }
 
